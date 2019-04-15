@@ -7,15 +7,15 @@ class DateHelper{
     }
 
     static textoParaDate(texto){
+
+        if(!/\d{4}-\d{2}-\d{2}/.test(texto))
+            throw new Error('Deve estar no formato aaaa-mm-dd');
+        
        return new Date(...texto.split('-').map((item,indece) => item - (indece % 2)));
     }
 
     static dateParaTexto(date){
 
-        if(!/\d{4}-\d{2}-\d{2}/.test(texto))
-            throw new Error('Deve estar no formato aaaa-mm-dd');
-        
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; 
-
     }
 }

@@ -6,10 +6,11 @@ class NegociacaoController{
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
+        this._ordemAtual = '';
 
         this._listaNegociacoes = new Bind(new ListaNegociacoes(),
                                          new NegociacoesView($('#negociacoesView')),
-                                         'adiciona', 'esvazia');
+                                         'adiciona', 'esvazia', 'ordena', 'inverteOrdem');
 
         this._mensagem = new Bind(new Mensagem(),
                                     new MensagemView($('.mensagemView')),
@@ -42,19 +43,30 @@ class NegociacaoController{
         this._mensagem.texto = 'Lista de negociacoes apagadas';
     }
 
+    ordena(coluna) {
+        if(this._ordemAtual == coluna) {
+            this._listaNegociacoes.inverteOrdem();
+        } else {
+            this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);    
+        }
+        this._ordemAtual = coluna;
+    }
+
     importaNegociacoes(){
 
         let service = new NegociacaoService();
-        service.obterNegociacaoDaSemana((err, negociacoes) => {
 
-            if(err){
-                this._mensagem.texto = err;
-                return;
-            }
-
-            negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-            this._mensagem.texto = 'Negociacôes importando com sucesso';
-        });
+        Promise.all([service.obterNegociacaoDaSemana(),
+                service.obterNegociacaoDaSemanaAnterior(),
+                service.obterNegociacaoDaSemanaRetrasada()])
+                .then(negociacoes => {
+                    negociacoes
+                    .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                    .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+                    this._mensagem.texto = 'Negociacoes da semana obtida com sucesso';
+                })
+                .catch(erro => this._mensagem.texto = erro);
+                
     }
 
     _criaNegociacao(){

@@ -1,41 +1,47 @@
-var stores = ['negociacoes'];
-var version = 4;
-var dbName = 'aluraframe';
 
+var ConnectionFactory = (function () {
 
-class ConnectionFactory {
+    var stores = ['negociacoes'];
+    var version = 4;
+    var dbName = 'aluraframe';
 
-    constructor(){
-        throw new Error('Não é possível criar instâncias de ConnectionFactory.');
-    }
+    var connection = null;
 
-    static getConnction(){
+    return class ConnectionFactory {
 
-        return new Promise((resolve, reject) => {
+        constructor(){
+            throw new Error('Não é possível criar instâncias de ConnectionFactory.');
+        }
 
-            let openRequest = window.indexedDB.open(dbName, 1);
+        static getConnction(){
 
-            openRequest.onupgradeneeded = e => {
-                ConnectionFactory._createStores(e.target.result);
-            };
+            return new Promise((resolve, reject) => {
 
-            openRequest.onsuccess = e => {
+                let openRequest = window.indexedDB.open(dbName, 1);
+
+                openRequest.onupgradeneeded = e => {
+                    ConnectionFactory._createStores(e.target.result);
+                };
+
+                openRequest.onsuccess = e => {
+                    if(!connection) connection = e.target.result;
+                    resolve(connection);
+                };
+
+                openRequest.onerror = e => {
+                    reject(e.target.error.name);
+                };
+            });
+        }
+
+        static _createStores(connection){
+            stores.forEach(store => {
+
+                if(connection.objectStoreNames.contains(store)) 
+                    connection.deleteObjectStore(store);
                 
-            };
-
-            openRequest.onerror = e => {
-                
-            };
-        });
+                connection.createObjectStore(store , {autoIncremente: true});
+            });
+        }
     }
-
-    static _createStores(connection){
-        stores.forEach(store => {
-
-            if(connection.objectStoreNames.contains(store)) 
-                connection.deleteObjectStore(store);
-            
-            connection.createObjectStore(store , {autoIncremente: true});
-        });
-    }
-}
+});

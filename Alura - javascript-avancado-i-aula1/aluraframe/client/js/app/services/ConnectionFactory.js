@@ -1,3 +1,7 @@
+var stores = ['negociacoes'];
+var version = 4;
+var dbName = 'aluraframe';
+
 
 class ConnectionFactory {
 
@@ -9,10 +13,10 @@ class ConnectionFactory {
 
         return new Promise((resolve, reject) => {
 
-            let openRequest = window.indexedDB.open('aluraframe', 1);
+            let openRequest = window.indexedDB.open(dbName, 1);
 
             openRequest.onupgradeneeded = e => {
-
+                ConnectionFactory._createStores(e.target.result);
             };
 
             openRequest.onsuccess = e => {
@@ -22,6 +26,16 @@ class ConnectionFactory {
             openRequest.onerror = e => {
                 
             };
+        });
+    }
+
+    static _createStores(connection){
+        stores.forEach(store => {
+
+            if(connection.objectStoreNames.contains(store)) 
+                connection.deleteObjectStore(store);
+            
+            connection.createObjectStore(store , {autoIncremente: true});
         });
     }
 }

@@ -23,16 +23,18 @@ class NegociacaoController{
 
     adiciona(event){
         event.preventDefault();
+ 
+        this._listaNegociacoes.adiciona(this._criaNegociacao());
+        this._limpaFormulario();
+    }
 
-        let negociacao = new Negociacao(
-            this.data,
-            this.quantidade,
-            this.valor,
+    _criaNegociacao(){
+
+        return new Negociacao(
+                this.data,
+                this.quantidade,
+                this.valor,
         );
-        
-        this._listaNegociacoes.adiciona(negociacao);
-        
-        _limpaFormulario();
     }
 
     _limpaFormulario(){
@@ -41,6 +43,6 @@ class NegociacaoController{
         this._inputQuantidade.value = 1;
         this._inputValor.value = 0.0;
 
-        this._inputQuantidade.focus();
+        this._inputData.focus();
     }
 }

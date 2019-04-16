@@ -1,29 +1,19 @@
 
 class HttpService {
 
+    _handleErrors(res) {
+
+        if(res.ok){
+            return res;
+        } 
+        throw new Error(res.statusText);
+    }
+
     get(url){
 
-        return new Promise((resolve, reject) => {
-            let xhr = new XMLHttpRequest();
-
-                xhr.open('GET', url);
-        
-                xhr.onreadystatechange = () => {
-        
-                    if(xhr.readyState == 4){
-                        if(xhr.status == 200){
-        
-                        resolve(JSON.parse(xhr.responseText));
-                                
-                        } else{
-                            console.log(`Error: ${xhr.responseText}`);
-                            reject(xhr.responseText);
-                        }
-                    }
-                };
-        
-                xhr.send();
-        });
+        return fetch(url)
+            .then(res => this._handleErrors(res))
+            .then(res => res.json());
     }
 
 

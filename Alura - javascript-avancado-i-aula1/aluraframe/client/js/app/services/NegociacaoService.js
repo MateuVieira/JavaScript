@@ -70,4 +70,24 @@ class NegociacaoService {
                 throw new Error('Não foi possível lapagar negociações.')
             });
     }
+
+    importa(listaAtual) {
+
+        let service = new NegociacaoService();
+
+        return Promise.all([service.obterNegociacaoDaSemana(),
+                service.obterNegociacaoDaSemanaAnterior(),
+                service.obterNegociacaoDaSemanaRetrasada()])
+               .then(negociacoes =>
+                     negociacoes
+                     .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                     .filter(negociacao =>
+                        !listaAtual.some(negociacaoExistente =>
+                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)))
+                )
+                .catch(erro => {
+                    throw new Error('Não foi possível buscar negociações para importar.')
+                });
+                
+    }
 }

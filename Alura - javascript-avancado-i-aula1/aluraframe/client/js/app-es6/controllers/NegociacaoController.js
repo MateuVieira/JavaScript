@@ -8,7 +8,7 @@ import {NegociacaoService} from '../services/NegociacaoService';
 import {MensagemView} from '../views/MensagemView';
 import {NegociacoesView} from '../views/NegociacoesView';
 
-class NegociacaoController{
+export class NegociacaoController{
 
     constructor(){
         let $ = document.querySelector.bind(document);

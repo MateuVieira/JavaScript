@@ -82,13 +82,15 @@ class NegociacaoController{
         Promise.all([service.obterNegociacaoDaSemana(),
                 service.obterNegociacaoDaSemanaAnterior(),
                 service.obterNegociacaoDaSemanaRetrasada()])
-                .then(negociacoes => negociacoes.filter(negociacao => 
-                    !this._listaNegociacoes.negociacoes.some(negociacaoExistente => 
+               .then(negociacoes =>
+                     negociacoes
+                     .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
+                     .filter(negociacao =>
+                        !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
                             JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)))
                 )
                 .then(negociacoes => {
                     negociacoes
-                    .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
                     .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
                     this._mensagem.texto = 'Negociacoes da semana obtida com sucesso';
                 })

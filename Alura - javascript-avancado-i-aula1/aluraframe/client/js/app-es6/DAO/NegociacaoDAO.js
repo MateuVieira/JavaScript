@@ -1,5 +1,5 @@
 
-class NegociacaoDAO {
+export class NegociacaoDAO {
 
     constructor(connection) {
         

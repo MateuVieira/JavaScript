@@ -1,5 +1,6 @@
+import {View} from './view';
 
-class NegociacoesView extends View {
+export class NegociacoesView extends View {
 
     constructor(elemento) {
         super(elemento);

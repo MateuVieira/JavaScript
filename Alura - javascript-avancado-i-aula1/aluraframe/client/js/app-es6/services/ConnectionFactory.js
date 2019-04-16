@@ -1,5 +1,5 @@
 
-var ConnectionFactory = (function () {
+
 
     const stores = ['negociacoes'];
     const version = 4;
@@ -8,7 +8,7 @@ var ConnectionFactory = (function () {
     var connection = null;
     var close = null;
 
-    return class ConnectionFactory {
+    export class ConnectionFactory {
 
         constructor(){
             throw new Error('Não é possível criar instâncias de ConnectionFactory.');
@@ -60,4 +60,3 @@ var ConnectionFactory = (function () {
             }
         }
     }
-}) ();

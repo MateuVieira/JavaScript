@@ -1,5 +1,5 @@
 
-class ProxyFatory {
+export class ProxyFatory {
 
     static create(objeto, props, acao){
 

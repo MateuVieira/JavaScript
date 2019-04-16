@@ -85,25 +85,13 @@ class NegociacaoController{
 
     importaNegociacoes(){
 
-        let service = this._service;
-
-        Promise.all([service.obterNegociacaoDaSemana(),
-                service.obterNegociacaoDaSemanaAnterior(),
-                service.obterNegociacaoDaSemanaRetrasada()])
-               .then(negociacoes =>
-                     negociacoes
-                     .reduce((arrayAchatado, array) => arrayAchatado.concat(array), [])
-                     .filter(negociacao =>
-                        !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
-                            JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)))
-                )
-                .then(negociacoes => {
-                    negociacoes
-                    .forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-                    this._mensagem.texto = 'Negociacoes da semana obtida com sucesso';
-                })
-                .catch(erro => this._mensagem.texto = erro);
-                
+        this._service
+            .importa(this._listaNegociacoes.negociacoes)
+            .then(negociacoes => negociacoes.forEach(negociacao =>{
+                this._listaNegociacoes.adiciona(negociacao);
+                this._mensagem.texto = 'Negocições do períodp importadas';
+            }))
+            .catch(erro => this.mensagem.texto = erro);
     }
 
     _criaNegociacao(){

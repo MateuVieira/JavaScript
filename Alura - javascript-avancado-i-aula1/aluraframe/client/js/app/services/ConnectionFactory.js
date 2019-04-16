@@ -14,11 +14,11 @@ var ConnectionFactory = (function () {
             throw new Error('Não é possível criar instâncias de ConnectionFactory.');
         }
 
-        static getConnction(){
+        static getConnection(){
 
             return new Promise((resolve, reject) => {
 
-                let openRequest = window.indexedDB.open(dbName, 1);
+                let openRequest = window.indexedDB.open(dbName, 5);
 
                 openRequest.onupgradeneeded = e => {
                     ConnectionFactory._createStores(e.target.result);
@@ -48,7 +48,7 @@ var ConnectionFactory = (function () {
                 if(connection.objectStoreNames.contains(store)) 
                     connection.deleteObjectStore(store);
                 
-                connection.createObjectStore(store , {autoIncremente: true});
+                connection.createObjectStore(store , {autoIncrement: true});
             });
         }
 

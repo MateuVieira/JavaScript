@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './css/pure-min.css';
 import './css/side-menu.css';
+import InputCustomizado from './componentes/inputCustomizado';
+import InputSubmit from './componentes/inputSubmit';
+import {FormularioAutor, TabelaAutores} from './Autor';
+
 
 class App extends Component {
 
@@ -78,25 +82,14 @@ class App extends Component {
             <div className="header">
               <h1>Cadastro de Autores</h1>
             </div>
+            <br/>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
                 <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="POST">
-                  <div className="pure-control-group">
-                    <label htmlFor="nome">Nome</label> 
-                    <input id="nome" type="text" name="nome" value={this.state.nome}  onChange={this.setNome.bind(this)}/>                  
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="email">Email</label> 
-                    <input id="email" type="email" name="email" value={this.state.email}  onChange={this.setEmail.bind(this)}/>                  
-                  </div>
-                  <div className="pure-control-group">
-                    <label htmlFor="senha">Senha</label> 
-                    <input id="senha" type="password" name="senha" value={this.state.senha} onChange={this.setSenha.bind(this)}/>                                      
-                  </div>
-                  <div className="pure-control-group">                                  
-                    <label></label> 
-                    <button type="submit" className="pure-button pure-button-primary">Gravar</button>                                    
-                  </div>
+                  <InputCustomizado id="nome" type="text" label="Nome" name="nome" value={this.state.nome}  onChange={this.setNome.bind(this)}/>                  
+                  <InputCustomizado id="email" type="email" label="Email" name="email" value={this.state.email}  onChange={this.setEmail.bind(this)}/>                  
+                  <InputCustomizado id="senha" type="password" label="Senha" name="senha" value={this.state.senha}  onChange={this.setSenha.bind(this)}/>                  
+                  <InputSubmit type="submit" label="Gravar" />
                 </form>             
 
               </div>  

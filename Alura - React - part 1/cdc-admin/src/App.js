@@ -6,7 +6,38 @@ class App extends Component {
 
   constructor() {
     super();
-    this.state = {lista : [{nome:'alberto', email:'@gmail.com',senha:'123456'}]};
+    this.state = {lista : [], nome : '', email : '', senha : ''};
+  }
+
+  componentDidMount() {
+
+    let url = `https://cdc-react.herokuapp.com/api/autores`;
+    
+    fetch(url, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(data => data.filter(dado => dado.id < 100))
+    .then(data => this.setState({lista:data}))
+    .catch(error => console.error(error));
+    
+  }
+
+  enviaForm(evento) {
+
+    evento.preventeDefault();
+
+    let url = `https://cdc-react.herokuapp.com/api/autores`;
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({nome: this.state.nome , email:this.state.email , senha:this.state.senha}),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => console.log(res.status))
+    .catch(error => console.error(error));
   }
 
   render() {
@@ -37,7 +68,7 @@ class App extends Component {
             </div>
             <div className="content" id="content">
               <div className="pure-form pure-form-aligned">
-                <form className="pure-form pure-form-aligned">
+                <form className="pure-form pure-form-aligned" onSubmit={this.enviaForm} method="POST">
                   <div className="pure-control-group">
                     <label htmlFor="nome">Nome</label> 
                     <input id="nome" type="text" name="nome" value=""  />                  
@@ -68,9 +99,8 @@ class App extends Component {
                   <tbody>
                       {
                         this.state.lista.map(autor => {
-
                           return (
-                            <tr>
+                            <tr key={autor.id}>
                               <td>{autor.nome}</td>
                               <td>{autor.email}</td>
                             </tr>

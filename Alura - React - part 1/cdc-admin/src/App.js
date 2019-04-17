@@ -10,9 +10,7 @@ class App extends Component {
     return (
        
       <div id="layout">
-    
         <a href="#menu" id="menuLink" className="menu-link">
-        
           <span></span>
         </a>
 

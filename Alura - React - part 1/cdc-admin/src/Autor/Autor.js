@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {InputCustomizado, InputSubmit} from '../componentes/';
-/* import InputSubmit from './componentes/inputSubmit'; */
+import InputCustomizado from '../componentes/inputCustomizado';
+import InputSubmit from '../componentes/inputSubmit';
 
 export class FormularioAutor extends Component {
 
@@ -59,6 +59,25 @@ export class FormularioAutor extends Component {
 
 
 export class TabelaAutores extends Component {
+
+    constructor() {
+        super();
+        this.state = {lista : []};
+      }
+    
+      componentDidMount() {
+    
+        let url = `https://cdc-react.herokuapp.com/api/autores`;
+        
+        fetch(url, {
+          method: 'GET'
+        })
+        .then(res => res.json())
+        .then(data => data.filter(dado => dado.id < 100))
+        .then(data => this.setState({lista:data}))
+        .catch(error => console.error(error));
+        
+      }
 
     render() {
 

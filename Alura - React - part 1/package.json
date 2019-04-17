@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "core-js": "^3.0.1",
+    "create-react-context": "^0.2.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
     "react-redux": "^7.0.2",
     "react-router": "^5.0.0"
   }

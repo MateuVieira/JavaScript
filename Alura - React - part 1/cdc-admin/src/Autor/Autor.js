@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InputCustomizado from '../componentes/inputCustomizado';
 import InputSubmit from '../componentes/inputSubmit';
 
-export class FormularioAutor extends Component {
+class FormularioAutor extends Component {
 
     constructor() {
         
@@ -39,7 +39,7 @@ export class FormularioAutor extends Component {
             "Content-Type": "application/json"
           }
         })
-        .then(res => console.log(res.status))
+        .then(res => this.props.callbackAtualizaListabem(res))
         .catch(error => console.error(error));
       }
     
@@ -58,7 +58,41 @@ export class FormularioAutor extends Component {
 }
 
 
-export class TabelaAutores extends Component {
+class TabelaAutores extends Component {
+
+    
+
+    render() {
+
+        return(
+
+            <div>            
+            <table className="pure-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>email</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {
+                    this.props.lista.map(autor => {
+                      return (
+                        <tr key={autor.id}>
+                          <td>{autor.nome}</td>
+                          <td>{autor.email}</td>
+                        </tr>
+                      );
+                    })
+                  }               
+              </tbody>
+            </table> 
+          </div>     
+        );
+    }
+}
+
+export default class AutorBox extends Component {
 
     constructor() {
         super();
@@ -79,35 +113,20 @@ export class TabelaAutores extends Component {
         
       }
 
+      atualizaListagem(novaLista) {
+
+        this.setState({lista:novaLista});
+      }
+
+
     render() {
 
         return(
 
-            <div>            
-            <table className="pure-table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>email</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {
-                    this.state.lista.map(autor => {
-                      return (
-                        <tr key={autor.id}>
-                          <td>{autor.nome}</td>
-                          <td>{autor.email}</td>
-                        </tr>
-                      );
-                    })
-                  }               
-              </tbody>
-            </table> 
-          </div>     
+            <div>
+                <FormularioAutor callbackAtualizaListabem={this.atualizaListagem.bind(this)} />
+                <TabelaAutores lista={this.state.lista} />
+            </div>
         );
     }
 }
-
-
-

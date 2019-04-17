@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InputCustomizado from '../componentes/inputCustomizado';
 import InputSubmit from '../componentes/inputSubmit';
+import Redux from 'redux';
 
 class FormularioAutor extends Component {
 
@@ -39,7 +40,7 @@ class FormularioAutor extends Component {
             "Content-Type": "application/json"
           }
         })
-        .then(res => this.props.callbackAtualizaListabem(res))
+        .then(res => console.log(res))
         .catch(error => console.error(error));
       }
     

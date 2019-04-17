@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import InputCustomizado from '../componentes/inputCustomizado';
 import InputSubmit from '../componentes/inputSubmit';
 import Redux from 'redux';
+import TratadorErros from '../Util/TratadorErros'
 
 class FormularioAutor extends Component {
 
@@ -41,7 +42,11 @@ class FormularioAutor extends Component {
           }
         })
         .then(res => console.log(res))
-        .catch(error => console.error(error));
+        .catch(error => {
+            if(error.status === 400){
+                new TratadorErros().publicaErros(error.responseJSON);
+            }
+        });
       }
     
       setNome(evento) {

@@ -30,7 +30,7 @@ html,body {
   }
   
   .header-logo {
-    background: url(../imgs/logo-instalura.svg) no-repeat left;
+    background: url(../img/logo-instalura.svg) no-repeat left;
     height: 1em;
     padding-left: 1.5em;
     padding-bottom: .2em;
@@ -58,7 +58,7 @@ html,body {
   
   .header-busca-submit {
     border: 0;
-    background: url(../imgs/busca-icone.png) center center no-repeat #069;
+    background: url(../img/busca-icone.png) center center no-repeat #069;
     text-indent: -9999px;
     overflow: hidden;
     background-size: 20px;
@@ -181,7 +181,7 @@ html,body {
   }
   
   .fotoAtualizacoes-like {
-    background: url(../imgs/s2.png) no-repeat center center;
+    background: url(../img/s2.png) no-repeat center center;
     background-size: 32px 32px;
     width: 44px;
     height: 44px;
@@ -192,7 +192,7 @@ html,body {
   }
   
   .fotoAtualizacoes-like-ativo {
-    background: url(../imgs/s2-check.png) no-repeat center center;
+    background: url(../img/s2-check.png) no-repeat center center;
     background-size: 32px 32px;
     width: 44px;
     height: 44px;

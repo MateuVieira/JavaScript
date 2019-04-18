@@ -1,7 +1,9 @@
 {
   "dependencies": {
-    "core-js": "^3.0.1",
+    "add": "^2.0.6",
+    "core-js": "3",
     "create-react-context": "^0.2.3",
+    "fbjs": "^1.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-redux": "^7.0.2",

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 export default class Login extends Component {
 
-    constructor(param) {
-        super();
-        this.state = {mensagem : ''};
+    constructor(props){
+        super(props); 
+        this.state = {mensagem : this.props.location.query.msg};
     }
 
     envia(event) {
@@ -27,7 +27,7 @@ export default class Login extends Component {
         })
         .then(token => {
             localStorage.setItem('auth-token', token);
-            
+
         })
         .catch(error => console.error(error));
         

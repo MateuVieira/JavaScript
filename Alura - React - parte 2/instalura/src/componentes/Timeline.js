@@ -12,6 +12,8 @@ export default class Timeline extends Component {
     componentDidMount() {
 
         let url = `https://instalura-api.herokuapp.com/api/public/fotos/rafael`;
+        /* let url = `https://instalura-api.herokuapp.com/api/public/fotos?X-AUTH-TOKE=${localStorage.getItem('auth-token')}`; */
+
 
         fetch(url)
         .then(res => res.json())
@@ -25,10 +27,8 @@ export default class Timeline extends Component {
 
             <div className="fotos container">
                 {
-                    this.state.listaFoto.map(foto => <FotoItem foto={foto}/>)
+                    this.state.listaFoto.map(foto => <FotoItem key={foto.id} foto={foto}/>)
                 }
-               {/*  <FotoItem/>
-                <FotoItem/> */}
             </div>   
 
         );

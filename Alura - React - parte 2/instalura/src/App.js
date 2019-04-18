@@ -7,9 +7,9 @@ class App extends Component {
   render() {
     return (
 
-      <div>
-        <Header  />
-        <Timeline  />
+      <div key={"timeline"}>
+        <Header  key={"timelineHeader"}/>
+        <Timeline key={"timelineTimeLine"} />
       </div>
 
     );
